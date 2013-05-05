@@ -1,0 +1,210 @@
+﻿@model InvoicePrj.Models.Invoice
+<header>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(document).tooltip({
+            selector: '[data-toggle="tooltip"]',
+            placement: 'bottom'
+        });
+
+        $('#invoiceList').slimScroll({
+            height: '400px',
+            alwaysVisible: true
+        });
+
+        $('#txtcustomer').focus();
+
+        
+        var urlAllInvoice = '@Url.RouteUrl("DefaultApi", new { httproute="", controller = "Invoice", action = "GetAllInvoices" })';
+        var urlMaxInvoice = '@Url.RouteUrl("DefaultApi", new { httproute="", controller = "Invoice", action = "GetMaxInvoice" })';
+        var urlDelInvoice = '@Url.RouteUrl("DefaultApi", new { httproute="", controller = "Invoice", action = "DeleteInvoice" })';
+        var urlInsInvoice = '@Url.RouteUrl("DefaultApi", new { httproute="", controller = "Invoice", action = "InsertInvoice" })';
+        var urlGAmountTot = '@Url.RouteUrl("DefaultApi", new { httproute="", controller = "Invoice", action = "GetGAmountTot" })';
+        var urlNAmountTot = '@Url.RouteUrl("DefaultApi", new { httproute="", controller = "Invoice", action = "GetNAmountTot" })';
+        var urlTaxTot =     '@Url.RouteUrl("DefaultApi", new { httproute="", controller = "Invoice", action = "GetTaxTot" })';
+
+
+        self.invoiceNAmountTot = ko.observableArray();
+        self.invoiceTaxTot = ko.observableArray();
+        self.invoiceGAmountTot = ko.observableArray();
+        self.invoiceCustomer = ko.observableArray();
+        self.invoiceGrAmount = ko.observableArray();
+        self.invoiceNumber = ko.observableArray();
+        self.invoice = ko.observableArray();
+        self.remove = function (invoice) {
+            $.ajax({ type: "DELETE", url: urlDelInvoice + '/' + invoice.id })
+                .done(function () {
+                    self.invoice.remove(invoice);
+                    $.getJSON(urlMaxInvoice, self.invoiceNumber);
+                    $.getJSON(urlGAmountTot, self.invoiceGAmountTot);
+                    $.getJSON(urlNAmountTot, self.invoiceNAmountTot);
+                    $.getJSON(urlTaxTot, self.invoiceTaxTot);
+                });
+        }
+        self.create = function (formElement) {
+            $(formElement).validate();
+            if ($(formElement).valid()) {
+                $.post(urlInsInvoice, $(formElement).serialize(), null, "json")
+                    .done(function (o) {
+                        self.invoice.push(o);
+                        $.getJSON(urlMaxInvoice, self.invoiceNumber);
+                        $.getJSON(urlGAmountTot, self.invoiceGAmountTot);
+                        $.getJSON(urlNAmountTot, self.invoiceNAmountTot);
+                        $.getJSON(urlTaxTot, self.invoiceTaxTot);
+                        self.invoiceCustomer("");
+                        self.invoiceGrAmount("");
+                        $('#txtcustomer').focus();
+                        
+                    });
+            }
+        }
+        
+        $.getJSON(urlAllInvoice, self.invoice);
+        $.getJSON(urlMaxInvoice, self.invoiceNumber);
+        $.getJSON(urlGAmountTot, self.invoiceGAmountTot);
+        $.getJSON(urlNAmountTot, self.invoiceNAmountTot);
+        $.getJSON(urlTaxTot, self.invoiceTaxTot);
+
+        var viewModel = {
+            invoices: invoice,
+            invNumber: invoiceNumber,
+            removeInv: remove,
+            insInvoice: create,
+            invCustomer: invoiceCustomer,
+            invGrAmount: invoiceGrAmount,
+            invGAmountTot: invoiceGAmountTot,
+            invTaxTot: invoiceTaxTot,
+            invNAmountTot: invoiceNAmountTot
+            
+        };
+
+        ko.applyBindings(viewModel);
+
+    })
+    
+</script>
+    
+</header>
+<div id="body">
+    
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+          <a class="brand" href="#">Invoices Managment</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+        <div class="span5"> 
+            <div class="clearfix">
+            <form class="form-horizontal well" data-bind="submit: insInvoice">
+                    @Html.ValidationSummary(true)
+                    <fieldset>
+                        <legend>New Invoice</legend>
+                        <div class="row">
+                            <div class="span2">
+                                <span class="label label-info">New Invoice</span>
+                            </div>
+                            <div class="span2">
+                                @Html.Label("Gr Amounts:",new { @class = "label label-warning"})
+                                @Html.Label("GrAmounts",new { @class = "label label-warning",data_bind="text: invGAmountTot",id="lblGrAmountsTot"})
+                                <br />
+                                @Html.Label("Contributions:",new { @class = "label label-warning"})
+                                @Html.Label("Contributions",new { @class = "label label-warning",data_bind="text: invTaxTot"})
+                                <br />
+                                @Html.Label("Net Amounts:",new { @class = "label label-warning"})
+                                @Html.Label("NetAmounts",new { @class = "label label-warning",data_bind="text: invNAmountTot",id="lblNetAmounts"})
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="control-group">
+                            <div class="controls">
+                                @Html.TextBoxFor(model => model.invoiceDate,new {@class = "input-large", @required="",@Value = @DateTime.Today.ToString("yyyy/MM/dd"),style="display:none;" })
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.invoiceNumber,new { @class = "control-label"})
+                            <div class="controls">
+                                @Html.TextBoxFor(model => model.invoiceNumber,new { @class = "input-mini", required="",data_bind="value: invNumber",id = "txtinvNumber" })
+                                @Html.ValidationMessageFor(model => model.invoiceNumber)
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.customer,new { @class = "control-label"})
+                            <div class="controls">
+                                @Html.TextBoxFor(model => model.customer,new { @class = "input-large", @required="",data_bind="value: invoiceCustomer",id = "txtcustomer" })
+                                @Html.ValidationMessageFor(model => model.customer)
+                            </div>
+                        </div> 
+                        <div class="control-group">
+                             <div class="input-append">
+                                @Html.LabelFor(model => model.grossAmount,new { @class = "control-label"})  
+                                <div class="controls">
+                                    @Html.TextBoxFor(model => model.grossAmount,new { @class = "input-medium", @required="",data_bind="value: invGrAmount",id="txtGrAmount" })
+                                    @Html.ValidationMessageFor(model => model.grossAmount)
+                                    <span class="add-on">€</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="input-append">
+                                <label class="control-label" for="input04">
+                                        <abbr title="Supplementary">Supp. </abbr>Contribution:  
+                                    </label>
+                                     <div class="controls">
+                                        @Html.TextBoxFor(model => model.supplementaryContribution,new { @class = "input-small uneditable-input", @required="",data_bind="value:4" })
+                                        @Html.ValidationMessageFor(model => model.supplementaryContribution)
+                                        <span class="add-on">%</span>    
+                                    </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </fieldset>
+            </form>
+            </div>
+        </div>
+        <div id="invoiceList" class="span6">
+            <table class="table">  
+                <thead>  
+                    <tr>  
+                    <th style = "display:none"></th>
+                    <th>N°</th>  
+                    <th>Project</th>  
+                    <th>Gr.Amount</th>  
+                    <th>Supp.Contribution(%)</th>
+                    <th>Net Amount</th>    
+                    </tr>  
+                </thead>  
+                <tbody data-bind="foreach: invoices">
+                    <tr>
+                        <td style = "display:none" data-bind="text: id"></td>
+                        <td data-bind="text: invoiceNumber"></td>
+                        <td data-bind="text: customer"></td>
+                        <td data-bind="text: grossAmount"></td>
+                        <td data-bind="text: supplementaryContribution"></td>
+                        <td data-bind="text: netAmount"></td>
+                        <td>
+                            <a class="btn btn-mini" data-toggle="tooltip" title="Delete Item" data-bind="click: $root.removeInv" href="#">
+                             <i class="icon-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>  
+        </div>
+        <br />
+    </div>
+</div>
+

@@ -1,0 +1,60 @@
+/* Drop and Create Table */
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Invoices]') AND type in (N'U'))
+DROP TABLE [dbo].[Invoices]
+GO
+
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Invoices](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[invoiceNumber] [int] NOT NULL,
+	[invoiceDate] [datetime] NOT NULL,
+	[grossAmount] [float] NOT NULL,
+	[supplementaryContribution] [float] NOT NULL,
+	[netAmount] [float] NOT NULL,
+	[customer] [nvarchar](4000) NOT NULL,
+ CONSTRAINT [PK_Invoices] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+
+
+/*Inizialize database with random data*/
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (1,getdate(),1000,4,960,'Customer1')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (2,getdate(),2000,4,1920,'Customer2')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (3,getdate(),3000,4,2880,'Customer3')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (4,getdate(),4000,4,3840,'Customer4')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (5,getdate(),5000,4,4800,'Customer5')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (6,getdate(),6000,4,5760,'Customer6')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (7,getdate(),7000,4,6720,'Customer7')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (8,getdate(),8000,4,7680,'Customer8')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (9,getdate(),9000,4,8640,'Customer9')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (10,getdate(),10000,4,9600,'Customer10')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (11,getdate(),11000,4,10560,'Customer11')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (12,getdate(),12000,4,11520,'Customer12')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (13,getdate(),13000,4,12480,'Customer13')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (14,getdate(),14000,4,13440,'Customer14')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (15,getdate(),15000,4,14400,'Customer15')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (16,getdate(),16000,4,15360,'Customer16')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (17,getdate(),17000,4,16320,'Customer17')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (18,getdate(),18000,4,17280,'Customer18')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (19,getdate(),19000,4,18240,'Customer19')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (20,getdate(),20000,4,19200,'Customer20')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (21,getdate(),21000,4,20160,'Customer21')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (22,getdate(),22000,4,21120,'Customer22')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (23,getdate(),23000,4,22080,'Customer23')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (24,getdate(),24000,4,23040,'Customer24')
+INSERT INTO [Invoices]([invoiceNumber],[invoiceDate],[grossAmount],[supplementaryContribution],[netAmount],[customer]) VALUES (25,getdate(),25000,4,24000,'Customer25')
+
+
+

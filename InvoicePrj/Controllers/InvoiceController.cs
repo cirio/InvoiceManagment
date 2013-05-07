@@ -22,7 +22,7 @@ namespace InvoicePrj.Controllers
             catch (Exception ex)
             {
 
-                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message)); 
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.InternalServerError, ex.InnerException)); 
             }
             
         }
@@ -50,7 +50,7 @@ namespace InvoicePrj.Controllers
             }
             catch (Exception ex)
             {
-                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message));
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.InternalServerError, ex.InnerException));
             }
             
         }
@@ -63,7 +63,7 @@ namespace InvoicePrj.Controllers
             catch (Exception ex)
             {
 
-                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message));
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.InternalServerError, ex.InnerException));
             }
             
         }
@@ -76,7 +76,7 @@ namespace InvoicePrj.Controllers
             catch (Exception ex)
             {
 
-                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message));
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.InternalServerError, ex.InnerException));
             }
             
         }
@@ -89,7 +89,7 @@ namespace InvoicePrj.Controllers
             catch (Exception ex)
             {
 
-                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message));
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.InternalServerError, ex.InnerException));
             }
             
         }
@@ -106,7 +106,7 @@ namespace InvoicePrj.Controllers
             catch (Exception ex)
             {
 
-                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message));
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.InternalServerError, ex.InnerException));
             }
             
         }

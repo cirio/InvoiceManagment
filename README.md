@@ -8,3 +8,5 @@ The database can be inizialized with the script in the folder <code>Scripts\Setu
 Try the demo with Google Chrome.
 
 
+ANY SUGGESTIONS WOULD BE APPRECIATED :)
+

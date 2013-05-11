@@ -7,6 +7,7 @@ library.
 The database can be inizialized with the script in the folder <code>Scripts\SetupDB\setupDB.txt</code>  
 Try the demo with Google Chrome.
 
+Contact: @cirio (twitter)
 
 ANY SUGGESTIONS WOULD BE APPRECIATED :)
 

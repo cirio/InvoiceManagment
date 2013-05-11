@@ -8,7 +8,7 @@ namespace InvoicePrj.Models
 {
     public interface IInvoiceRepository
     {
-        IEnumerable<Invoice> GetAll();
+        IList<Invoice> GetAll();
         Invoice Get(int id);
         Invoice Add(Invoice item);
         void Remove(int id);
